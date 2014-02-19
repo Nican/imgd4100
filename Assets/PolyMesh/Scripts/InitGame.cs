@@ -20,7 +20,7 @@ public class InitGame : MonoBehaviour {
 
 		a.BuildMesh ();
 
-		//var a = GameObject.Find ("Rock");
+
 
 	
 	}
