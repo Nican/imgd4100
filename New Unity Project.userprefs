@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PolyMesh\Scripts\PolyMesh.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PolyMesh\Demo\Scripts\RollingRock.cs">
     <Files>
-      <File FileName="Assets\PolyMesh\Scripts\PolyMesh.cs" Line="53" Column="35" />
+      <File FileName="Assets\PolyMesh\Scripts\PolyMesh.cs" Line="43" Column="30" />
+      <File FileName="Assets\PolyMesh\Scripts\InitGame.cs" Line="20" Column="3" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\RollingRock.cs" Line="10" Column="33" />
+      <File FileName="Assets\PolyMesh\Scripts\Editor\PolyMeshEditor.cs" Line="102" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
