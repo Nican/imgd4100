@@ -7,8 +7,10 @@ public class InitGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		var rock2 = Instantiate (rock, new Vector3 (0, 10), Quaternion.identity) as GameObject;
-		var a = rock2.GetComponent<PolyMesh> ();
+		GameObject rock2 = Instantiate (rock, new Vector3 (0, 10), Quaternion.identity) as GameObject;
+		PolyMesh a = rock2.GetComponent<PolyMesh> ();
+
+		a.makeUnique ();
 
 		a.keyPoints.Clear ();
 		a.isCurve.Clear ();

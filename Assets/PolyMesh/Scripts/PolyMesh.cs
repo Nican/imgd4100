@@ -17,7 +17,13 @@ public class PolyMesh : MonoBehaviour
 	public Vector2 uvPosition;
 	public float uvScale = 1;
 	public float uvRotation;
-	
+
+	public void makeUnique()
+	{
+		GetComponent<MeshFilter>().mesh = null;
+		BuildMesh();
+	}
+
 	public List<Vector3> GetEdgePoints()
 	{
 		//Build the point list and calculate curves
