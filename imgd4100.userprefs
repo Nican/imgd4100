@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PolyMesh\Demo\Scripts\SurvivorMachine\AbstractState.cs">
+    <Files>
+      <File FileName="Assets\PolyMesh\Demo\Scripts\Character.cs" Line="5" Column="21" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\player.cs" Line="4" Column="1" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\survivor.cs" Line="14" Column="17" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\skills.cs" Line="9" Column="17" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\survivorAI.cs" Line="9" Column="1" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\zombie.cs" Line="17" Column="3" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\SurvivorMachine\AbstractState.cs" Line="49" Column="34" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
