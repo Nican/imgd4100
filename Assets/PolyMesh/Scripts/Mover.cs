@@ -6,7 +6,7 @@ public class Mover : MonoBehaviour {
 	
 	public float defspeed = 50;
 	public float destX = 10;
-	public float destY = 10;
+	public float destY = 100;
 
 	public Rigidbody r;
 	public Pathfind p;
@@ -18,6 +18,7 @@ public class Mover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		/*
 		if(p == null)
 		{
 			p = (Pathfind)ScriptableObject.CreateInstance<Pathfind>();
@@ -34,6 +35,8 @@ public class Mover : MonoBehaviour {
 				p = p.next;
 			}
 		}
+		*/
+		r.AddForce (new Vector3 (0, 100));
 	}
 
 	/// <summary>
