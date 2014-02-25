@@ -10,10 +10,12 @@ public class zombie : Character {
 	
 	// Update is called once per frame
 	void Update () {
+		base.Update ();
 	
 	}
 
-	void bite() {
+	void bite()
+	{
 
 	}
 }
