@@ -24,9 +24,11 @@ public class MapGenerator : MonoBehaviour {
 
 		Rect center1 = new Rect ();
 		Rect center2 = new Rect ();
+		Rect center3 = new Rect ();
 
 		center1.Set (horizontalSize / 2, 0, horizontalSize / 100, verticalSize);
 		center2.Set (0, verticalSize / 2, horizontalSize, verticalSize / 100);
+		center2.Set (horizontalSize * 0.45f, verticalSize * 0.45f, horizontalSize * 0.10f, verticalSize * 0.10f);
 
 
 		foreach(var rect in generator.Rects){
