@@ -7,6 +7,7 @@ public class InitGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		/*
 		GameObject rock2 = Instantiate (rock, new Vector3 (0, 10), Quaternion.identity) as GameObject;
 		PolyMesh a = rock2.GetComponent<PolyMesh> ();
 
@@ -21,7 +22,7 @@ public class InitGame : MonoBehaviour {
 		}
 
 		a.BuildMesh ();
-
+		*/
 
 
 	

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,19 +12,31 @@ public class MapGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		float verticalSize   = Camera.main.orthographicSize * 2.0f;
+		float horizontalSize = verticalSize * Screen.width / Screen.height;
+
 		GameObject rock = GameObject.Find ("Rock");
-		MapGeneratorInternal generator = new MapGeneratorInternal (new Vector2(10.0f,10.0f));
+		MapGeneratorInternal generator = new MapGeneratorInternal (new Vector2(horizontalSize, verticalSize));
 
-
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			generator.Generate ();
 		}
+
+		Rect center1 = new Rect ();
+		Rect center2 = new Rect ();
+
+		center1.Set (horizontalSize / 2, 0, horizontalSize / 100, verticalSize);
+		center2.Set (0, verticalSize / 2, horizontalSize, verticalSize / 100);
+
 
 		foreach(var rect in generator.Rects){
 			if(Random.Range(0,2) != 0)
 				continue;
 
-			Vector3 center = new Vector3(rect.x + rect.width/2, rect.y + rect.height / 2);
+			if(rect.Overlaps(center1) || rect.Overlaps(center2))
+				continue;
+
+			Vector3 center = new Vector3(rect.x + rect.width/2 - horizontalSize/2, rect.y + rect.height / 2-verticalSize/2);
 			GameObject rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 			PolyMesh a = rock2.GetComponent<PolyMesh> ();
 			
@@ -33,42 +46,21 @@ public class MapGenerator : MonoBehaviour {
 			a.isCurve.Clear ();
 
 			a.keyPoints.Add(new Vector3(-rect.width/2, -rect.height/2));
-			a.isCurve.Add(false);
-
-			a.keyPoints.Add(new Vector3(rect.width/2, -rect.height/2));
-			a.isCurve.Add(false);
-			
+			a.keyPoints.Add(new Vector3(rect.width/2, -rect.height/2));			
 			a.keyPoints.Add(new Vector3(rect.width/2, rect.height/2));
-			a.isCurve.Add(false);
-			
 			a.keyPoints.Add(new Vector3(-rect.width/2, rect.height/2));
-			a.isCurve.Add(false);
-			
 
-			/*
-			for (float r = 0.0f; r <= Mathf.PI * 2; r += 0.1f) {
-				a.keyPoints.Add(new Vector3(Mathf.Cos(r), Mathf.Sin(r) * 2));
+			for(int i =0; i< a.keyPoints.Count; i++)
 				a.isCurve.Add(false);
-			}
-			*/
 			
 			a.BuildMesh ();
 
 		}
-
-
-
-		
-
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-
-
-
 	}
 }
 
@@ -92,16 +84,16 @@ class MapGeneratorInternal {
 	{
 		this.Size = size;
 		DeltaSearch = Size / 300;
-		MinSize = this.Size.x * this.Size.y * 0.005f;
+		MinSize = this.Size.x * this.Size.y * 0.001f;
 
 
 		//Add an initial rectangle to the map
 		Rect initialRect = new Rect();
-		initialRect.x = Random.Range (0.0f, Size.x / 2);
-		initialRect.y = Random.Range (0.0f, Size.x / 2);
-
 		initialRect.width = Random.Range (0.01f, Size.x / 5);
 		initialRect.height = Random.Range (0.01f, Size.x / 5);
+
+		initialRect.x = 0; //Random.Range (0.0f, Size.x / 2);
+		initialRect.y = size.y - initialRect.height; //Random.Range (0.0f, Size.x / 2);
 
 		Rects.Add (initialRect);
 
@@ -133,7 +125,7 @@ class MapGeneratorInternal {
 		if (target.x < 0 || target.y < 0)
 			return false;
 
-		if (target.x + target.width > Size.x || target.y + target.height > Size.y)
+		if ((target.x + target.width) > Size.x || (target.y + target.height) > Size.y)
 			return false;
 
 		foreach (var rect in Rects) {
@@ -235,8 +227,19 @@ class MapGeneratorInternal {
 			newRect = Grow (newRect, GrowVelocity);
 		}
 
+		if(!IsOpenRect(newRect))
+			return;
+
 		if (newRect.width * newRect.height < MinSize)
 			return;
+
+		if ((Mathf.Min(newRect.width, newRect.height) / Mathf.Max (newRect.width, newRect.height)) < 0.05)
+			return;
+
+		newRect.x -= Mathf.Abs(DeltaSearch.x);
+		newRect.y -= Mathf.Abs(DeltaSearch.y);
+		newRect.width += Mathf.Abs(DeltaSearch.x) * 2.0f;
+		newRect.height += Mathf.Abs(DeltaSearch.y) * 2.0f;
 
 		Rects.Add (newRect);
 	}
@@ -244,15 +247,15 @@ class MapGeneratorInternal {
 	public Rect Grow(Rect rect, Vector2 velocity){
 		Rect retnRect = rect;
 
-		retnRect.width += velocity.x;
-		retnRect.height += velocity.y;
+		retnRect.width += Mathf.Abs( velocity.x );
+		retnRect.height += Mathf.Abs( velocity.y );
 
 		if (velocity.x < 0) {
-			retnRect.x -= velocity.x;
+			retnRect.x += velocity.x;
 		}
 
 		if (velocity.y < 0) {
-			retnRect.y -= velocity.y;
+			retnRect.y += velocity.y;
 		}
 
 		return retnRect;
