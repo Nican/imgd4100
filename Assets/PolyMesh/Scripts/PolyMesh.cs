@@ -21,7 +21,7 @@ public class PolyMesh : MonoBehaviour
 	public void makeUnique()
 	{
 		GetComponent<MeshFilter>().mesh = null;
-		BuildMesh();
+		//BuildMesh();
 	}
 
 	public List<Vector3> GetEdgePoints()
@@ -53,7 +53,7 @@ public class PolyMesh : MonoBehaviour
 	
 	public void BuildMesh()
 	{
-		Debug.Log ("Calling BuildMesh");
+		//Debug.Log ("Calling BuildMesh");
 		var points = GetEdgePoints();
 		//points = points.Select(t => t * 2).ToList();
 		var vertices = points.ToArray();
