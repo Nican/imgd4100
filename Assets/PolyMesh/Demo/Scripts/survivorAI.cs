@@ -21,7 +21,7 @@ public class survivorAI : survivor {
 	// Update is called once per frame
 	void Update () {
 		base.Update ();
-		this.State = State.Update ();
+		//this.State = State.Update ();
 	}
 
 	public void doSearch() 

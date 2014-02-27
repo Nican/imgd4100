@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class survivor : Character {
-
+	public string name = "asd";
 	public float[] trust; // trust level
 	public int ammo; // bullets left
 	public float hunger; // level of hunger for food
