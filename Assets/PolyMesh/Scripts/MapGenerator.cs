@@ -86,7 +86,7 @@ class MapGeneratorInternal {
 	{
 		this.Size = size;
 		DeltaSearch = Size / 300;
-		MinSize = this.Size.x * this.Size.y * 0.0001f;
+		MinSize = this.Size.x * this.Size.y * 0.01f;
 
 
 		//Add an initial rectangle to the map
@@ -215,7 +215,7 @@ class MapGeneratorInternal {
 		if (counter == 0)
 			return;
 
-		float maxSize = Random.value * Size.x * Size.y * 0.001f;
+		float maxSize = Random.value * Size.x * Size.y * 0.02f;
 		Rect newRect = new Rect ();
 		newRect.x = StartPoint.x;
 		newRect.y = StartPoint.y;

@@ -42,14 +42,16 @@ public class MapGeneration2 : MonoBehaviour {
 		//building.points.Add (new Point(0,-1));
 		//building.points.Add (new Point(0,1));
 		//building.points.Add (new Point(-1,0));
+		//building.points.Add (new Point(1,0));
 		//AddBuilding(building);
 
 		for (int x = 0; x < sizeX -2 ; x++) {
 			for(int y = 0; y < sizeX - 2; y++){
 				CityBuilding building = generator.Grid[x,y];
 
-				if( building.X == x && building.Y == y)
+				if( building.X == x && building.Y == y){
 					AddBuilding(building);
+				}
 			}
 		}
 		
@@ -117,6 +119,7 @@ public class MapGeneration2 : MonoBehaviour {
 
 	}
 
+
 	void OnGUI () {
 		for (int x = 0; x < sizeX -2 ; x++) {
 			for(int y = 0; y < sizeX - 2; y++){
@@ -130,7 +133,7 @@ public class MapGeneration2 : MonoBehaviour {
 		}
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
@@ -139,7 +142,7 @@ public class MapGeneration2 : MonoBehaviour {
 
 }
 
-struct Point {
+public struct Point {
 	public int x;
 	public int y;
 
