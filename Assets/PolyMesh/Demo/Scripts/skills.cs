@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class skills : MonoBehaviour {
+public class skills {
 
 	public float searchFood, defence; // level of skill for searching food, defending base with guns;
 

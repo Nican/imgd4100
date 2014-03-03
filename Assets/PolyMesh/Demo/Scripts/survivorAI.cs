@@ -4,8 +4,9 @@ using System.Collections;
 public class survivorAI : survivor {
 	public bool inCamp;
 	public bool isCarrying = false;
+	public bool isSearching, isPatrol;
 
-	AbstractState State = new Patrol();
+	public AbstractState State = new Patrol();
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,7 @@ public class survivorAI : survivor {
 
 	public void doSearch() 
 	{
-
+		isSearching = true;
 	}
 
 	public void doShoot(survivorAI enemy, zombie zombie) 
