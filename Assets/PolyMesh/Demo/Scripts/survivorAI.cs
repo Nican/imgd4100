@@ -23,6 +23,13 @@ public class survivorAI : survivor {
 	void Update () {
 		base.Update ();
 		//this.State = State.Update ();
+		GameObject z = GameObject.FindGameObjectWithTag("zombie");
+		var angle = Vector3.Angle(z.transform.position-transform.position,transform.forward);
+		if(angle>=5f||angle<=-5f)
+			this.gameObject.transform.Rotate (new Vector3(0,0,angle));
+		else
+			transform.Rotate(new Vector3(0,0,0));
+
 	}
 
 	public void doSearch() 
@@ -38,15 +45,17 @@ public class survivorAI : survivor {
 		{
 			if(SwitchToNight())
 			{
+				var angle = Vector3.Angle(zombie.transform.position-transform.position,transform.forward);
+				this.gameObject.transform.Rotate (new Vector3(0,0,angle));
 				zombie.isDead = true;
 				zombie.decayTime = Time.time;
-				zombie.gameObject.tag = "Untagged";
+				zombie.gameObject.tag = "zombie";
 			}
 			else
 			{
 				enemy.isDead = true;
 				enemy.decayTime = Time.time;
-				enemy.gameObject.tag = "Untagged";
+				enemy.gameObject.tag = "survivor";
 			}
 		}
 	}
