@@ -28,7 +28,7 @@ public class PathFind2 : MonoBehaviour {
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
-		if (Physics.Raycast (ray, 100, out hit )) {
+		/*if (Physics.Raycast (ray, 100, out hit )) {
 
 
 
@@ -43,7 +43,7 @@ public class PathFind2 : MonoBehaviour {
 
 
 
-		}
+		}*/
 
 
 
@@ -117,6 +117,7 @@ public class PathFind2 : MonoBehaviour {
 	}
 
 	public IEnumerable<Vector2> ReconstructPath(Dictionary<Point, Point> came_from, Point start_node){
+		/*
 		Point node = start_node;
 
 		yield return start_node;
@@ -128,13 +129,14 @@ public class PathFind2 : MonoBehaviour {
 		}
 
 		/*
-if current_node in came_from
-        p := reconstruct_path(came_from, came_from[current_node])
-        return (p + current_node)
-    else
-        return current_node
+		 * 
+			if current_node in came_from
+       	 		p := reconstruct_path(came_from, came_from[current_node])
+        		return (p + current_node)
+   			else
+        		return current_node
 		*/
-
+		return null;
 	}
 
 	public Vector2 PointToVector( Point pt ){
