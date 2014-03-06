@@ -723,8 +723,6 @@ GameObject:
   - 81: {fileID: 495999856}
   - 114: {fileID: 495999861}
   - 114: {fileID: 495999862}
-  - 114: {fileID: 495999863}
-  - 114: {fileID: 495999864}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -813,40 +811,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 495999855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04df55356867570458227e40c26473ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &495999863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 495999855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eef222ab5438394880acf392b2b947c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f3bd669d018ee747bea1a4b8121d209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingDensity: 30
   buildingSizeDensity: 70
   roadsHNum: 4
   roadsVNum: 4
-  s: {fileID: 11400000, guid: 0a7e6a036f6ddc34fb3e3a4c17970beb, type: 2}
-  ammo: {fileID: 100004, guid: eba78faabe2ec4b48bb5c77ac55b9d92, type: 2}
---- !u!114 &495999864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 495999855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0415be094442909429628ee8d76af1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listWindowOn: 0
-  infoWindowOn: 0
-  scrollPosition: {x: 0, y: 0}
+  s: {fileID: 11400000, guid: 8508fc94140a26d4fa40f9ab6a7b5db4, type: 2}
+  ammo: {fileID: 100004, guid: c99c7a781a1b297478c84198741872b0, type: 2}
+  food: {fileID: 100000, guid: 0f83de71cea9288438853059aafbb9df, type: 2}
 --- !u!43 &636310216
 Mesh:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class MapGeneration3 : MonoBehaviour {
 
 	public survivor s;
 	public GameObject ammo;
+	public GameObject food;
 
 	// Use this for initialization
 	void Start () {
@@ -85,13 +86,10 @@ public class MapGeneration3 : MonoBehaviour {
 
 					a.BuildMesh ();
 				}
-				else if(Random.value < 0.01f)
-				{
-					center = convertGridToReal(indx,indz);
-					Instantiate(ammo,center,Quaternion.identity);
-				}
 			}
 		}
+
+		airdrop ();
 
 		for (int indx = -1; indx <= sizeX ; indx++)
 		{
@@ -341,5 +339,28 @@ public class MapGeneration3 : MonoBehaviour {
 	public static Point convertRealToGrid(Vector3 v)
 	{
 		return new Point ((int)(v.x+sizeX/2),(int)(v.y+sizeY/2));
+	}
+
+	void airdrop(int num = 10)
+	{
+		for (int indx = 0; indx < sizeX; indx++)
+		{
+			for(int indz = 0; indz < sizeY; indz++)
+			{
+				if(!occupiedGrid[indx][indz])
+				{
+					if(Random.value < 0.001f*num)
+					{
+						Vector3 center = convertGridToReal(indx,indz);
+						Instantiate(ammo,center,Quaternion.identity);
+					}
+					else if(Random.value < 0.001f*num)
+					{
+						Vector3 center = convertGridToReal(indx,indz);
+						Instantiate(food,center,Quaternion.identity);
+					}
+				}
+			}
+		}
 	}
 }

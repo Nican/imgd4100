@@ -75,7 +75,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 244f66ea9498c404d921e0df09223beb, type: 2}
+  - {fileID: 2100000, guid: 073d138597d4fd743a9440374603e68a, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
   angle: 0
   time: 0
   zombie1: {fileID: 100000, guid: b2ac2f0558e99604fa6ba7be64f483aa, type: 2}
-  shot: {fileID: 100000, guid: d61fc048b50000b4c81209807ccfa22c, type: 2}
+  shot: {fileID: 100000, guid: 4e538ad499cb72049b9e6ea23411f957, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,10 +180,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9be63db23494a8445bc87570913f07ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 79811aeca43f66342b8a60ed7db4402d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defspeed: 10
+  defspeed: 100
   destX: 15
   destY: 15
   r: {fileID: 5400000}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79397bb2ea57eb24ba280f52f300c7e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 397c7872914daf247ab071eccc1fb0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 0}
