@@ -4,6 +4,7 @@ using System.Collections;
 public class PathfindHelper : MonoBehaviour {
 
 	public Astar head;
+	public Mover2 m;
 
 	// Use this for initialization
 	void Start () {
@@ -26,11 +27,12 @@ public class PathfindHelper : MonoBehaviour {
 		head.Astarinit(null, (int)transform.position.x, (int)transform.position.y, testedGrid, x, y, MapGeneration3.occupiedGrid);
 		//head = new Astar (null, (int)transform.position.x, (int)transform.position.y, testedGrid, x, y, MapGeneration3.occupiedGrid);
 		int patience;
-		for(patience = 100000; !(head.isFinal ()) && patience > 0; patience--)
+		for(patience = 1000; !(head.isFinal ()) && patience > 0; patience--)
 		{
 			head.extend();
 		}
-		//print ("Found at patience = " + patience);
+		print ("Found at patience = " + patience);
+		if(patience == 0) m.found = true;
 		testedGrid = null;
 	}
 

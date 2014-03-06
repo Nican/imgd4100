@@ -4,8 +4,8 @@ using System.Collections;
 public class Mover2 : MonoBehaviour {
 
 	public float defspeed = 50;
-	public float destX = 10;
-	public float destY = 100;
+	public float destX = 15;
+	public float destY = 15;
 	
 	public Rigidbody r;
 	public PathfindHelper p;
