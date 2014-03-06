@@ -10,13 +10,13 @@ public class UI : MonoBehaviour {
 	List<survivorAI> sList;
 	survivorAI theSurvivor;
 	GUIStyle[] buttons = new GUIStyle[2];
-
+	
 	// Use this for initialization
 	void Start () {
 		windowRect = new Rect(Screen.width/4, Screen.height/4, Screen.width/2, 2*Screen.height/3);
-
-
-	
+		
+		
+		
 	}
 	
 	// Update is called once per frame
@@ -51,13 +51,15 @@ public class UI : MonoBehaviour {
 			int i = 0;
 			foreach (GameObject a in GameObject.FindGameObjectsWithTag("survivor")){
 				survivorAI b = a.GetComponent (typeof(survivorAI)) as survivorAI;
-				b.name = "john" + i;
-				i++;
-				sList.Add (b);
+				if(b.inCamp){
+					b.name = "john" + i;
+					i++;
+					sList.Add (b);
+				}
 			}
 			windowRect = GUI.Window (0, windowRect, ListWindow, "Survivor");
 		}
-
+		
 		if (infoWindowOn){
 			windowRect = GUI.Window (0, windowRect, infoWindow, theSurvivor.name);
 		}
@@ -81,9 +83,11 @@ public class UI : MonoBehaviour {
 			GUI.Label(new Rect(300, i*30, 50, 20), sList[i-1].skill.searchFood.ToString());
 			if(GUI.Button(new Rect(360, i*30, 100, 20), "doSearch")){
 				sList[i-1].State = new SearchAI();
+				sList[i-1].State.survivorAI = sList[i-1];
 			}
 			if(GUI.Button(new Rect(480, i*30, 100, 20), "doDefense")){
-				sList[i-1].State = new Patrol();
+				sList[i-1].State = new Night();
+				sList[i-1].State.survivorAI = sList[i-1];
 			}
 		}
 		GUI.EndScrollView();
@@ -97,7 +101,7 @@ public class UI : MonoBehaviour {
 			listWindowOn = listWindowOn? false: true;
 			infoWindowOn = !listWindowOn;
 		}
-
+		
 	}
 	void infoWindow(int windowID){
 		scrollPosition = GUI.BeginScrollView(new Rect(20, 40, Screen.width/2 -30, Screen.height/4 + 150), scrollPosition, new Rect(0, 0, 400, sList.Count*30));
@@ -120,7 +124,7 @@ public class UI : MonoBehaviour {
 		}
 		
 	}
-
+	
 	void test()
 	{
 		for (int i = 0; i < 20; i++)

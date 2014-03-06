@@ -723,6 +723,7 @@ GameObject:
   - 81: {fileID: 495999856}
   - 114: {fileID: 495999861}
   - 114: {fileID: 495999862}
+  - 114: {fileID: 495999863}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -821,6 +822,20 @@ MonoBehaviour:
   s: {fileID: 11400000, guid: 8508fc94140a26d4fa40f9ab6a7b5db4, type: 2}
   ammo: {fileID: 100004, guid: c99c7a781a1b297478c84198741872b0, type: 2}
   food: {fileID: 100000, guid: 0f83de71cea9288438853059aafbb9df, type: 2}
+--- !u!114 &495999863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 495999855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a1fd5418eb032459e090b9f6b6643e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listWindowOn: 0
+  infoWindowOn: 0
+  scrollPosition: {x: 0, y: 0}
 --- !u!43 &636310216
 Mesh:
   m_ObjectHideFlags: 0

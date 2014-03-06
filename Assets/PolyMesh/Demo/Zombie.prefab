@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403b464cf66d4f04cbc01a36277c00a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 1
+  isDead: 0
   decayTime: 1
 --- !u!136 &13600000
 CapsuleCollider:

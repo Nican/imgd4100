@@ -182,7 +182,7 @@ public class MapGeneration3 : MonoBehaviour {
 			a.BuildMesh ();
 		}
 
-		GameObject[] survivors = GameObject.FindGameObjectsWithTag("survivor");
+		/*GameObject[] survivors = GameObject.FindGameObjectsWithTag("survivor");
 		GameObject[] caches = GameObject.FindGameObjectsWithTag("Collectable");
 
 		for(int i = 0; i < Mathf.Min (survivors.Count(), caches.Count()); i++){
@@ -193,7 +193,7 @@ public class MapGeneration3 : MonoBehaviour {
 			m.destX = convertRealToGrid(cache.transform.position.x,cache.transform.position.y).x;
 			m.destY = convertRealToGrid(cache.transform.position.x,cache.transform.position.y).y;
 			m.found = false;
-		}
+		}*/
 	}
 	
 	// Update is called once per frame

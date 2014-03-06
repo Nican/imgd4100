@@ -170,7 +170,7 @@ MonoBehaviour:
   isPatrol: 0
   angle: 0
   time: 0
-  zombie1: {fileID: 100000, guid: b2ac2f0558e99604fa6ba7be64f483aa, type: 2}
+  zombie1: {fileID: 100000, guid: 726a62fcef89b8a4c896466f54de6e77, type: 2}
   shot: {fileID: 100000, guid: 4e538ad499cb72049b9e6ea23411f957, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
