@@ -10,8 +10,14 @@ using System.Collections.Generic;
 
 public class MapGeneration3 : MonoBehaviour {
 
-	int sizeX = 13;
-	int sizeZ = 13;
+	public static int sizeX = 13;
+	public static int sizeY = 13;
+
+
+	public int buildingDensity = 30;
+	public int buildingSizeDensity = 70;
+	public int roadsHNum = 4;
+	public int roadsVNum = 4;
 
 	public static bool[][] occupiedGrid;
 
@@ -22,19 +28,19 @@ public class MapGeneration3 : MonoBehaviour {
 		float horizontalSize = verticalSize * Screen.width / Screen.height;
 
 		sizeX = (int)horizontalSize - 2;
-		sizeZ = (int)verticalSize - 2;
+		sizeY = (int)verticalSize - 2;
 
 		//init occupiedGrid
 		occupiedGrid = new bool[sizeX][];
 		for(int i = 0; i < sizeX; i++)
 		{
-			occupiedGrid[i] = new bool[sizeZ];
+			occupiedGrid[i] = new bool[sizeY];
 		}
 
-		makeBuildings (occupiedGrid, sizeX, sizeZ, 30);
-		expandBuildings (occupiedGrid, sizeX, sizeZ, 70);
-		makeRoadsH (occupiedGrid, sizeX, sizeZ, 4);
-		makeRoadsV (occupiedGrid, sizeX, sizeZ, 4);
+		makeBuildings (occupiedGrid, sizeX, sizeY, buildingDensity);
+		expandBuildings (occupiedGrid, sizeX, sizeY, buildingSizeDensity);
+		makeRoadsH (occupiedGrid, sizeX, sizeY, roadsHNum);
+		makeRoadsV (occupiedGrid, sizeX, sizeY, roadsVNum);
 
 		GameObject rock = GameObject.Find ("Rock");
 
@@ -44,11 +50,11 @@ public class MapGeneration3 : MonoBehaviour {
 
 		for (int indx = 0; indx < sizeX; indx++)
 		{
-			for(int indz = 0; indz < sizeZ; indz++)
+			for(int indz = 0; indz < sizeY; indz++)
 			{
 				if(occupiedGrid[indx][indz])
 				{
-					center = new Vector3 ((float)(indx-sizeX/2),(float)(indz-sizeZ/2));
+					center = new Vector3 ((float)(indx-sizeX/2),(float)(indz-sizeY/2));
 					rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 					a = rock2.GetComponent<PolyMesh> ();
 
@@ -68,6 +74,97 @@ public class MapGeneration3 : MonoBehaviour {
 					a.BuildMesh ();
 				}
 			}
+		}
+
+		for (int indx = 0; indx < sizeX ; indx++)
+		{
+			//Top wall
+
+			center = new Vector3 ((float)(indx-sizeX/2),(float)(-sizeY/2));
+			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			a = rock2.GetComponent<PolyMesh> ();
+			
+			a.makeUnique ();
+			
+			a.keyPoints.Clear ();
+			a.isCurve.Clear ();
+			
+			a.keyPoints.Add (new Vector3 (-0.5f, -0.5f));
+			a.keyPoints.Add (new Vector3 (0.5f, -0.5f));			
+			a.keyPoints.Add (new Vector3 (0.5f, 0.5f));
+			a.keyPoints.Add (new Vector3 (-0.5f, 0.5f));
+			
+			for (int i =0; i< a.keyPoints.Count; i++)
+				a.isCurve.Add (false);
+			
+			a.BuildMesh ();
+
+			//Bottom wall
+
+			center = new Vector3 ((float)(indx-sizeX/2),(float)(sizeY/2));
+			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			a = rock2.GetComponent<PolyMesh> ();
+			
+			a.makeUnique ();
+			
+			a.keyPoints.Clear ();
+			a.isCurve.Clear ();
+			
+			a.keyPoints.Add (new Vector3 (-0.5f, -0.5f));
+			a.keyPoints.Add (new Vector3 (0.5f, -0.5f));			
+			a.keyPoints.Add (new Vector3 (0.5f, 0.5f));
+			a.keyPoints.Add (new Vector3 (-0.5f, 0.5f));
+			
+			for (int i =0; i< a.keyPoints.Count; i++)
+				a.isCurve.Add (false);
+			
+			a.BuildMesh ();
+		}
+
+		for(int indz = 1; indz < sizeY; indz++)
+		{
+
+			//Left wall
+
+			center = new Vector3 ((float)(-sizeX/2),(float)(indz-sizeY/2));
+			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			a = rock2.GetComponent<PolyMesh> ();
+			
+			a.makeUnique ();
+			
+			a.keyPoints.Clear ();
+			a.isCurve.Clear ();
+			
+			a.keyPoints.Add (new Vector3 (-0.5f, -0.5f));
+			a.keyPoints.Add (new Vector3 (0.5f, -0.5f));			
+			a.keyPoints.Add (new Vector3 (0.5f, 0.5f));
+			a.keyPoints.Add (new Vector3 (-0.5f, 0.5f));
+			
+			for (int i =0; i< a.keyPoints.Count; i++)
+				a.isCurve.Add (false);
+			
+			a.BuildMesh ();
+
+			//Right wall
+			
+			center = new Vector3 ((float)(sizeX/2),(float)(indz-sizeY/2));
+			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			a = rock2.GetComponent<PolyMesh> ();
+			
+			a.makeUnique ();
+			
+			a.keyPoints.Clear ();
+			a.isCurve.Clear ();
+			
+			a.keyPoints.Add (new Vector3 (-0.5f, -0.5f));
+			a.keyPoints.Add (new Vector3 (0.5f, -0.5f));			
+			a.keyPoints.Add (new Vector3 (0.5f, 0.5f));
+			a.keyPoints.Add (new Vector3 (-0.5f, 0.5f));
+			
+			for (int i =0; i< a.keyPoints.Count; i++)
+				a.isCurve.Add (false);
+			
+			a.BuildMesh ();
 		}
 	}
 	
@@ -189,7 +286,7 @@ public class MapGeneration3 : MonoBehaviour {
 						num++;
 		if (x > 0 && city [x - 1] [z])
 			num++;
-		if (z < (sizeZ - 1) && city [x] [z + 1])
+		if (z < (sizeY - 1) && city [x] [z + 1])
 			num++;
 		if (z > 0 && city [x] [z - 1])
 			num++;

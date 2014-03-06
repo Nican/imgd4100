@@ -26,7 +26,7 @@ public class Astar : ScriptableObject {
 		//Update won't occur until the pathfind is done, so this is safe.
 		if (!isrealpath)
 		{
-			tested[xcoord][ycoord] = false;
+			tested[xcoord+MapGeneration3.sizeX/2][ycoord+MapGeneration3.sizeY/2] = false;
 			Destroy (this);
 		}
 	}
@@ -42,14 +42,22 @@ public class Astar : ScriptableObject {
 	/// <param name="tx">The x coordinate of the target.</param>
 	/// <param name="ty">The y coordinate of the target.</param>
 	/// <param name="b">The grid of loations that are occupied by an obstacle.</param>
-	public Astar(Astar p, int x, int y, bool[][] b, int tx, int ty, bool[][] blocked){
+	public void Astarinit(Astar p, int x, int y, bool[][] b, int tx, int ty, bool[][] blocked){
+		//if(p != null) MonoBehaviour.print("Not head\n");
+		xcoord = x;
+		ycoord = y;
+		x = x+MapGeneration3.sizeX/2;
+		y = y+MapGeneration3.sizeY/2;
+		if(x < 0 || y < 0 || x > MapGeneration3.sizeX-1 || y > MapGeneration3.sizeY - 1)
+		{
+			MonoBehaviour.print("Invalid pathfind\n");
+			return;
+		}
 		if (blocked [x] [y])
 		{
 			isdead = true;
 		}
 		parent = p;
-		xcoord = x;
-		ycoord = y;
 		tested = b;
 		targetx = tx;
 		targety = ty;
@@ -67,9 +75,10 @@ public class Astar : ScriptableObject {
 	/// <param name="n">A reference to the Astar object to be set as the next point in the path</param>
 	void finalizePath(Astar n)
 	{
+		//MonoBehaviour.print("finalizing\n");
 		next = n;
 		isrealpath = true;
-		tested [xcoord] [ycoord] = false;
+		tested [xcoord+MapGeneration3.sizeX/2] [ycoord+MapGeneration3.sizeY/2] = false;
 		if(parent != null)
 		{
 			parent.finalizePath (this);
@@ -94,24 +103,47 @@ public class Astar : ScriptableObject {
 		if(isdead) return;
 		if(children == null)
 		{
-			children = new Astar[9];
-			for(int xmod = -1; xmod <= 1; xmod++)
+			children = new Astar[4];
+
+			//Only checks a cross shape, but the way movement is handled means that the character should move on diagonals anyway if viable.
+			//This is to avoid characters attempting to slip between buildings that touch at a corner, and to avoid zigzagging.
+			for(int xmod = 0; xmod <= 1; xmod++)
 			{
-				for(int ymod = -1; ymod <= 1; ymod++)
+				if(xcoord + MapGeneration3.sizeX/2 + xmod*2 - 1 < MapGeneration3.sizeX &&
+				   xcoord + MapGeneration3.sizeX/2 + xmod*2 - 1 >= 0 &&
+				   ycoord + MapGeneration3.sizeY/2 < MapGeneration3.sizeY &&
+				   ycoord + MapGeneration3.sizeY/2 >= 0 &&
+				   !tested[xcoord + MapGeneration3.sizeX/2 + xmod*2 - 1] [ycoord + MapGeneration3.sizeY/2])
 				{
-					if(!tested[xcoord + xmod] [ycoord + ymod])
-					{
-						children[(xmod + 1)*3 + ymod + 1] = new Astar(this,xcoord + xmod, ycoord + ymod,tested,targetx,targety,blocks);
-					}
+					children[xmod] = (Astar)ScriptableObject.CreateInstance("Astar");
+					children[xmod].Astarinit(this,xcoord + xmod*2 - 1, ycoord,tested,targetx,targety,blocks);
+				}
+			}
+			for(int ymod = 0; ymod <= 1; ymod++)
+			{
+				if(xcoord + MapGeneration3.sizeX/2 < MapGeneration3.sizeX &&
+				   xcoord + MapGeneration3.sizeX/2 >= 0 &&
+				   ycoord + MapGeneration3.sizeY/2 + ymod*2 - 1 < MapGeneration3.sizeY &&
+				   ycoord + MapGeneration3.sizeY/2 + ymod*2 - 1 >= 0 &&
+				   !tested[xcoord + MapGeneration3.sizeX/2] [ycoord + MapGeneration3.sizeY/2 + ymod * 2 - 1])
+				{
+					children[2 + ymod] = (Astar)ScriptableObject.CreateInstance("Astar");
+					children[2 + ymod].Astarinit(this,xcoord, ycoord + ymod*2 - 1,tested,targetx,targety,blocks);
 				}
 			}
 		}
 		else
 		{
-			for(int ind = 0; ind < 9; ind++)
+			for(int ind = 0; ind < 4; ind++)
 			{
 				if(children[ind] != null) children[ind].extend();
 			}
 		}
+	}
+
+	public void cleanup()
+	{
+		isrealpath = false;
+		if(parent != null) parent.cleanup ();
 	}
 }
