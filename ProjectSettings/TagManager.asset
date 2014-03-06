@@ -5,6 +5,7 @@ TagManager:
   tags:
   - survivor
   - zombie
+  - effect
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

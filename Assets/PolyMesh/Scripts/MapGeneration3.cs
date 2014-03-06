@@ -21,6 +21,9 @@ public class MapGeneration3 : MonoBehaviour {
 
 	public static bool[][] occupiedGrid;
 
+	public survivor s;
+	public GameObject ammo;
+
 	// Use this for initialization
 	void Start () {
 
@@ -42,6 +45,15 @@ public class MapGeneration3 : MonoBehaviour {
 		makeRoadsH (occupiedGrid, sizeX, sizeY, roadsHNum);
 		makeRoadsV (occupiedGrid, sizeX, sizeY, roadsVNum);
 
+		occupiedGrid [sizeX / 2] [sizeY / 2] = false;
+		occupiedGrid [sizeX / 2 + 1] [sizeY / 2] = false;
+		occupiedGrid [sizeX / 2] [sizeY / 2 + 1] = false;
+		occupiedGrid [sizeX / 2 + 1] [sizeY / 2 + 1] = false;
+		Instantiate (s, new Vector3 (1f, 1f), Quaternion.identity);
+		Instantiate (s, new Vector3 (0f, 1f), Quaternion.identity);
+		Instantiate (s, new Vector3 (1f, 0f), Quaternion.identity);
+		Instantiate (s, new Vector3 (0f, 0f), Quaternion.identity);
+
 		GameObject rock = GameObject.Find ("Rock");
 
 		Vector3 center; 
@@ -54,7 +66,7 @@ public class MapGeneration3 : MonoBehaviour {
 			{
 				if(occupiedGrid[indx][indz])
 				{
-					center = new Vector3 ((float)(indx-sizeX/2),(float)(indz-sizeY/2));
+					center = convertGridToReal(indx,indz);
 					rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 					a = rock2.GetComponent<PolyMesh> ();
 
@@ -73,14 +85,19 @@ public class MapGeneration3 : MonoBehaviour {
 
 					a.BuildMesh ();
 				}
+				else if(Random.value < 0.01f)
+				{
+					center = convertGridToReal(indx,indz);
+					Instantiate(ammo,center,Quaternion.identity);
+				}
 			}
 		}
 
-		for (int indx = 0; indx < sizeX ; indx++)
+		for (int indx = -1; indx <= sizeX ; indx++)
 		{
 			//Top wall
 
-			center = new Vector3 ((float)(indx-sizeX/2),(float)(-sizeY/2));
+			center = new Vector3 ((float)(indx-sizeX/2),(float)(-sizeY/2 - 1));
 			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 			a = rock2.GetComponent<PolyMesh> ();
 			
@@ -101,7 +118,7 @@ public class MapGeneration3 : MonoBehaviour {
 
 			//Bottom wall
 
-			center = new Vector3 ((float)(indx-sizeX/2),(float)(sizeY/2));
+			center = new Vector3 ((float)(indx-sizeX/2),(float)(sizeY/2 + 1));
 			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 			a = rock2.GetComponent<PolyMesh> ();
 			
@@ -121,12 +138,12 @@ public class MapGeneration3 : MonoBehaviour {
 			a.BuildMesh ();
 		}
 
-		for(int indz = 1; indz < sizeY; indz++)
+		for(int indz = 0; indz <= sizeY; indz++)
 		{
 
 			//Left wall
 
-			center = new Vector3 ((float)(-sizeX/2),(float)(indz-sizeY/2));
+			center = new Vector3 ((float)(-sizeX/2-1),(float)(indz-sizeY/2));
 			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 			a = rock2.GetComponent<PolyMesh> ();
 			
@@ -147,7 +164,7 @@ public class MapGeneration3 : MonoBehaviour {
 
 			//Right wall
 			
-			center = new Vector3 ((float)(sizeX/2),(float)(indz-sizeY/2));
+			center = new Vector3 ((float)(sizeX/2 + 1),(float)(indz-sizeY/2));
 			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
 			a = rock2.GetComponent<PolyMesh> ();
 			
@@ -165,6 +182,19 @@ public class MapGeneration3 : MonoBehaviour {
 				a.isCurve.Add (false);
 			
 			a.BuildMesh ();
+		}
+
+		GameObject[] survivors = GameObject.FindGameObjectsWithTag("survivor");
+		GameObject[] caches = GameObject.FindGameObjectsWithTag("Collectable");
+
+		for(int i = 0; i < Mathf.Min (survivors.Count(), caches.Count()); i++){
+			GameObject survivor = survivors[i];
+			GameObject cache = caches[i];
+
+			Mover2 m = survivor.GetComponent<Mover2>();
+			m.destX = convertRealToGrid(cache.transform.position.x,cache.transform.position.y).x;
+			m.destY = convertRealToGrid(cache.transform.position.x,cache.transform.position.y).y;
+			m.found = false;
 		}
 	}
 	
@@ -291,5 +321,25 @@ public class MapGeneration3 : MonoBehaviour {
 		if (z > 0 && city [x] [z - 1])
 			num++;
 		return num;
+	}
+
+	public Vector3 convertGridToReal(int x, int y)
+	{
+		return new Vector3 ((float)(x-sizeX/2),(float)(y-sizeY/2));
+	}
+
+	public Vector3 convertGridToReal(Point xy)
+	{
+		return new Vector3 ((float)(xy.x-sizeX/2),(float)(xy.y-sizeY/2));
+	}
+
+	public Point convertRealToGrid(float x, float y)
+	{
+		return new Point ((int)(x+sizeX/2),(int)(y+sizeY/2));
+	}
+
+	public Point convertRealToGrid(Vector3 v)
+	{
+		return new Point ((int)(v.x+sizeX/2),(int)(v.y+sizeY/2));
 	}
 }

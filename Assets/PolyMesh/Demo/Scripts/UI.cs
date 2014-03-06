@@ -14,7 +14,7 @@ public class UI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		windowRect = new Rect(Screen.width/4, Screen.height/4, Screen.width/2, 2*Screen.height/3);
-		test ();
+
 
 	
 	}
