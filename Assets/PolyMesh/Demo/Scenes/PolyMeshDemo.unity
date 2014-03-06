@@ -235,7 +235,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 185906890}
-  m_LocalRotation: {x: -4.37113847e-08, y: 4.37113918e-08, z: 4.37113918e-08, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -724,6 +724,7 @@ GameObject:
   - 114: {fileID: 495999861}
   - 114: {fileID: 495999862}
   - 114: {fileID: 495999863}
+  - 114: {fileID: 495999864}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -832,6 +833,20 @@ MonoBehaviour:
   roadsVNum: 4
   s: {fileID: 11400000, guid: 0a7e6a036f6ddc34fb3e3a4c17970beb, type: 2}
   ammo: {fileID: 100004, guid: eba78faabe2ec4b48bb5c77ac55b9d92, type: 2}
+--- !u!114 &495999864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 495999855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0415be094442909429628ee8d76af1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listWindowOn: 0
+  infoWindowOn: 0
+  scrollPosition: {x: 0, y: 0}
 --- !u!43 &636310216
 Mesh:
   m_ObjectHideFlags: 0
