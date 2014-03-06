@@ -36,6 +36,7 @@ public class Mover2 : MonoBehaviour {
 	{
 		if(start)
 		{
+			r.drag = 10;
 			p.Pathfind ((int)x, (int)y);
 			next[0] = p.head;
 			next[1] = p.popNext();
@@ -49,6 +50,17 @@ public class Mover2 : MonoBehaviour {
 		Vector3 next0V = new Vector3 ((float)(next [0].xcoord), (float)(next [0].ycoord));
 		Vector3 next1V = new Vector3 ((float)(next [1].xcoord), (float)(next [1].ycoord));
 		Vector3 next2V = new Vector3 ((float)(next [2].xcoord), (float)(next [2].ycoord));
+		if(Vector3.Distance(transform.position,MapGeneration3.convertGridToReal((int)x,(int)y)) < 0.02)
+		{
+			found = true;
+			start = true;
+			next[0].cleanup();
+			next[0] = null;
+			next[1] = null;
+			p.head = null;
+			r.drag = 100;
+			return;
+		}
 		if(Vector3.Distance(transform.position,next1V) <
 		        (Vector3.Distance(transform.position,next0V)))
 		{
@@ -56,7 +68,7 @@ public class Mover2 : MonoBehaviour {
 			next[0] = next[1];
 			next[1] = next[2];
 			next[2] = p.popNext();
-			if(next[0] == next[1])
+			/*if(next[0] == next[1])
 			{
 				found = true;
 				start = true;
@@ -65,7 +77,7 @@ public class Mover2 : MonoBehaviour {
 				next[1] = null;
 				p.head = null;
 				return;
-			}
+			}*/
 			next0V = next1V;
 			next1V = new Vector3 ((float)(next [1].xcoord), (float)(next [1].ycoord));
 		}

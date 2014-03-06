@@ -323,22 +323,22 @@ public class MapGeneration3 : MonoBehaviour {
 		return num;
 	}
 
-	public Vector3 convertGridToReal(int x, int y)
+	public static Vector3 convertGridToReal(int x, int y)
 	{
 		return new Vector3 ((float)(x-sizeX/2),(float)(y-sizeY/2));
 	}
 
-	public Vector3 convertGridToReal(Point xy)
+	public static Vector3 convertGridToReal(Point xy)
 	{
 		return new Vector3 ((float)(xy.x-sizeX/2),(float)(xy.y-sizeY/2));
 	}
 
-	public Point convertRealToGrid(float x, float y)
+	public static Point convertRealToGrid(float x, float y)
 	{
 		return new Point ((int)(x+sizeX/2),(int)(y+sizeY/2));
 	}
 
-	public Point convertRealToGrid(Vector3 v)
+	public static Point convertRealToGrid(Vector3 v)
 	{
 		return new Point ((int)(v.x+sizeX/2),(int)(v.y+sizeY/2));
 	}
