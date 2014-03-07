@@ -334,24 +334,24 @@ public class MapGeneration3 : MonoBehaviour {
 		return num;
 	}
 
-	public static Vector3 convertGridToReal(int x, int y)
+	public static Vector3 convertGridToReal(float x, float y)
 	{
-		return new Vector3 ((float)(x-sizeX/2),(float)(y-sizeY/2));
+		return new Vector3 (x-sizeX/2,y-sizeY/2);
 	}
 
-	public static Vector3 convertGridToReal(Point xy)
+	public static Vector3 convertGridToReal(Vector3 xy)
 	{
-		return new Vector3 ((float)(xy.x-sizeX/2),(float)(xy.y-sizeY/2));
+		return new Vector3 (xy.x-sizeX/2,xy.y-sizeY/2);
 	}
 
-	public static Point convertRealToGrid(float x, float y)
+	public static Vector2 convertRealToGrid(float x, float y)
 	{
-		return new Point ((int)(x+sizeX/2),(int)(y+sizeY/2));
+		return new Vector2 (x+sizeX/2,y+sizeY/2);
 	}
 
-	public static Point convertRealToGrid(Vector3 v)
+	public static Vector2 convertRealToGrid(Vector3 v)
 	{
-		return new Point ((int)(v.x+sizeX/2),(int)(v.y+sizeY/2));
+		return new Vector2 (v.x+sizeX/2,v.y+sizeY/2);
 	}
 
 	void airdrop(int num = 10)
