@@ -10,12 +10,18 @@ public abstract class AbstractState {
 	public survivorAI survivorAI;
 	
 	public abstract AbstractState Update ();
+
+	public AbstractState(survivorAI survivor){
+		this.survivorAI = survivor;
+	}
 }
 
 
 public class Patrol : AbstractState {
 	
-	
+	public Patrol(survivorAI parent) : base(parent)
+	{
+	}
 	
 	public override AbstractState Update ()
 	{
@@ -28,24 +34,21 @@ public class Patrol : AbstractState {
 		
 		float random = Random.value;
 		if (random >= 0f && random <= 0.6f) {
-			TalkState talk = new TalkState();
+			TalkState talk = new TalkState(survivorAI);
 			talk.Parent = this;
-			talk.survivorAI = this.survivorAI;
 			talk.Enemy = characters.First ();
 			return talk;
 			
 		} else if(random >= 0.6f && random <= 0.8f)
 		{
-			FightState fight = new FightState();
+			FightState fight = new FightState(survivorAI);
 			fight.Parent = this;
-			fight.survivorAI = this.survivorAI;
 			fight.Enemy = characters.First();
 			return fight;
 		} else 
 		{
-			RunState run = new RunState();
+			RunState run = new RunState(survivorAI);
 			run.Parent = this;
-			run.survivorAI = this.survivorAI;
 			run.Enemy = characters.First();
 			return run;
 		}
@@ -74,7 +77,9 @@ public class Patrol : AbstractState {
 
 
 public class Night : AbstractState {
-	
+	public Night(survivorAI parent) : base(parent)
+	{
+	}
 	
 	
 	public override AbstractState Update ()
@@ -86,9 +91,8 @@ public class Night : AbstractState {
 		
 		//We have to deal with the character that is getting close to our base
 		
-		FightState fight = new FightState();
+		FightState fight = new FightState(survivorAI);
 		fight.Parent = this;
-		fight.survivorAI = this.survivorAI;
 		fight.azombie = zombies.First();
 		return fight;
 	}
@@ -113,7 +117,13 @@ public class Night : AbstractState {
 }
 
 public class SearchAI : AbstractState {
-	
+
+	public readonly float startSearch;
+
+	public SearchAI(survivorAI parent) : base(parent)
+	{
+		startSearch = Time.fixedTime;
+	}
 	
 	
 	public override AbstractState Update ()
@@ -122,54 +132,69 @@ public class SearchAI : AbstractState {
 			return doSearch();
 		else return checkSight();
 	}
+
 	public AbstractState checkSight(){
 		List<survivorAI> characters = FindsurvivorAIsInSight ();
 		if (characters.Count == 0){
 			Debug.Log("do Search running!");
-			RunState run = new RunState();
-			run.Parent = this;
-			run.survivorAI = this.survivorAI;
-			return run; //We have nothing to do, our next state is out current states
-		}else{
-			
-			//We have to deal with the character that is getting close to the searcher
-			
-			float random = Random.value;
-			if (random >= 0f && random <= 0.6f) {
-				TalkState talk = new TalkState();
-				talk.Parent = this;
-				talk.survivorAI = this.survivorAI;
-				talk.Enemy = characters.First ();
-				return talk;
-				
-			} else if(random >= 0.6f && random <= 0.8f)
+			//RunState run = new RunState();
+			//run.Parent = this;
+			//run.survivorAI = this.survivorAI;
+			//return run; //We have nothing to do, our next state is out current states
+
+			Mover2 m = survivorAI.GetComponent<Mover2> ();
+
+			if(m.found == true || (Time.fixedTime - startSearch) > 5.0f) 
 			{
-				FightState fight = new FightState();
-				fight.Parent = this;
-				fight.survivorAI = this.survivorAI;
-				fight.Enemy = characters.First();
-				return fight;
-			} else 
-			{
-				RunState run = new RunState();
+				RunState run = new RunState(survivorAI);
 				run.Parent = this;
-				run.survivorAI = this.survivorAI;
-				run.Enemy = characters.First();
 				return run;
 			}
+
+			return this;
 		}
+			
+		//We have to deal with the character that is getting close to the searcher
+		
+		float random = Random.value;
+		if (random >= 0f && random <= 0.6f) {
+			TalkState talk = new TalkState(survivorAI);
+			talk.Parent = this;
+			talk.Enemy = characters.First ();
+			return talk;
+			
+		} else if(random >= 0.6f && random <= 0.8f)
+		{
+			FightState fight = new FightState(survivorAI);
+			fight.Parent = this;
+			fight.Enemy = characters.First();
+			return fight;
+		} else 
+		{
+			RunState run = new RunState(survivorAI);
+			run.Parent = this;
+			run.Enemy = characters.First();
+			return run;
+		}
+
 		
 	}
 	
 	public AbstractState doSearch()
 	{
+		MonoBehaviour.print("Searching");
 		//MapGeneration3 map = Camera.main.GetComponent<MapGeneration3> ();
 		GameObject[] caches = GameObject.FindGameObjectsWithTag("Collectable");
+
+		if (caches.Count () == 0)
+			return this;
 		
 		GameObject cache = caches [Random.Range (0, caches.Count ()-1)];
 		
 		var dest = MapGeneration3.convertRealToGrid(cache.transform.position.x,cache.transform.position.y);
-		
+
+		MonoBehaviour.print("Found cache at (" + dest.x + ","+dest.y+")");	
+
 		this.survivorAI.doSearch(dest.x, dest.y);
 		return this;
 		
@@ -196,8 +221,11 @@ public class SearchAI : AbstractState {
 	
 }
 public class TalkState : AbstractState {
+	public TalkState(survivorAI parent) : base(parent)
+	{
+	}
+
 	public survivorAI Enemy;
-	public survivorAI survivorAI;
 	
 	public override AbstractState Update ()
 	{
@@ -225,7 +253,10 @@ public class TalkState : AbstractState {
 
 public class RunState : AbstractState {
 	public survivorAI Enemy;
-	public survivorAI survivorAI;
+
+	public RunState(survivorAI parent) : base(parent)
+	{
+	}
 	
 	public override AbstractState Update ()
 	{
@@ -236,7 +267,7 @@ public class RunState : AbstractState {
 		}*/
 		if(Enemy != null) Enemy.doRun();
 		survivorAI.doRun ();
-		return new StandByState();
+		return new StandByState(survivorAI);
 		
 	}
 }
@@ -245,7 +276,10 @@ public class FightState : AbstractState {
 	
 	public survivorAI Enemy;
 	public zombie azombie;
-	public survivorAI survivorAI;
+
+	public FightState(survivorAI parent) : base(parent)
+	{
+	}
 	
 	public override AbstractState Update ()
 	{
@@ -280,6 +314,10 @@ public class FightState : AbstractState {
 }
 
 public class StandByState: AbstractState{
+	public StandByState(survivorAI parent) : base(parent)
+	{
+	}
+
 	public override AbstractState Update ()
 	{
 		return this;

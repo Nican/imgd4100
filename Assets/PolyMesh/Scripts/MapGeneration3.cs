@@ -26,7 +26,7 @@ public class MapGeneration3 : MonoBehaviour {
 	public GameObject food;
 
 	// Use this for initialization
-	void Start () {
+	public void GenerateGame () {
 
 		float verticalSize   = Camera.main.orthographicSize * 2.0f;
 		float horizontalSize = verticalSize * Screen.width / Screen.height;

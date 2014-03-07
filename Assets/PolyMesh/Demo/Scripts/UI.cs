@@ -82,12 +82,10 @@ public class UI : MonoBehaviour {
 			GUI.Label(new Rect(240, i*30, 50, 20), sList[i-1].skill.defence.ToString());
 			GUI.Label(new Rect(300, i*30, 50, 20), sList[i-1].skill.searchFood.ToString());
 			if(GUI.Button(new Rect(360, i*30, 100, 20), "doSearch")){
-				sList[i-1].State = new SearchAI();
-				sList[i-1].State.survivorAI = sList[i-1];
+				sList[i-1].State = new SearchAI(sList[i-1]);
 			}
 			if(GUI.Button(new Rect(480, i*30, 100, 20), "doDefense")){
-				sList[i-1].State = new Night();
-				sList[i-1].State.survivorAI = sList[i-1];
+				sList[i-1].State = new Night(sList[i-1]);
 			}
 		}
 		GUI.EndScrollView();
@@ -128,7 +126,7 @@ public class UI : MonoBehaviour {
 	void test()
 	{
 		for (int i = 0; i < 20; i++)
-			Instantiate((Object)GameObject.FindGameObjectWithTag("survivor"));
+			Instantiate(GameObject.FindGameObjectWithTag("survivor"));
 		List<survivorAI> new_sList = new List<survivorAI>();
 		int j = 0;
 		foreach (GameObject a in GameObject.FindGameObjectsWithTag("survivor")){

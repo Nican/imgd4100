@@ -1,14 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PolyMesh\Scripts\MapGeneration3.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PolyMesh\Demo\Scripts\survivorAI.cs">
     <Files>
-      <File FileName="Assets\PolyMesh\Demo\Scripts\UI.cs" Line="1" Column="1" />
-      <File FileName="Assets\PolyMesh\Demo\Scripts\survivorAI.cs" Line="1" Column="1" />
-      <File FileName="Assets\PolyMesh\Demo\Scripts\survivor.cs" Line="1" Column="1" />
-      <File FileName="Assets\PolyMesh\Demo\Scripts\SurvivorMachine\AbstractState.cs" Line="1" Column="1" />
-      <File FileName="Assets\PolyMesh\Scripts\PathfindHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets\PolyMesh\Scripts\Mover2.cs" Line="25" Column="18" />
-      <File FileName="Assets\PolyMesh\Scripts\MapGeneration3.cs" Line="360" Column="52" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\UI.cs" Line="99" Column="43" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\survivorAI.cs" Line="96" Column="18" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\survivor.cs" Line="53" Column="1" />
+      <File FileName="Assets\PolyMesh\Scripts\MapGeneration3.cs" Line="366" Column="2" />
+      <File FileName="Assets\PolyMesh\Demo\Scripts\SurvivorMachine\AbstractState.cs" Line="195" Column="23" />
+      <File FileName="Assets\PolyMesh\Scripts\Astar.cs" Line="150" Column="1" />
+      <File FileName="Assets\PolyMesh\Scripts\Pathfind.cs" Line="9" Column="32" />
+      <File FileName="Assets\PolyMesh\Scripts\PathfindHelper.cs" Line="19" Column="22" />
+      <File FileName="Assets\PolyMesh\Scripts\Mover2.cs" Line="14" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

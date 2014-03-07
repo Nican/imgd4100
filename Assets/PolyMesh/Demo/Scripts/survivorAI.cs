@@ -8,13 +8,17 @@ public class survivorAI : survivor {
 	public bool isCarrying = false;
 	public bool isSearching, isPatrol;
 	public float angle;
-	public AbstractState State = new StandByState ();
+	public AbstractState State;
 	GameObject[] effect = new GameObject[6];
 	public float time = 0f;
 	bool bEffect = false;
 	public GameObject zombie1;
 	
 	public GameObject shot;
+
+	public survivorAI(){
+		State = new StandByState (this);
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -89,6 +93,7 @@ public class survivorAI : survivor {
 		m.destX = x;
 		m.destY = y;
 		m.found = false;
+		m.start = true;
 	}
 	
 	public void doShoot(survivorAI enemy, zombie zombie) 

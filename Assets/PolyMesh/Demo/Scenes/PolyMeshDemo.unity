@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18f4b44601686f4dacd4c370e537bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rock: {fileID: 369623582}
+  zombie: {fileID: 100000, guid: 726a62fcef89b8a4c896466f54de6e77, type: 2}
 --- !u!114 &495999862
 MonoBehaviour:
   m_ObjectHideFlags: 0
