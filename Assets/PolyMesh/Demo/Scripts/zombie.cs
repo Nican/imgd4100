@@ -11,6 +11,11 @@ public class zombie : Character {
 		m.found = false;
 		m.start = true;
 	}
+
+	public override float MoveSpeed ()
+	{
+		return 10.0f;
+	}
 	
 	// Update is called once per frame
 	void Update () {

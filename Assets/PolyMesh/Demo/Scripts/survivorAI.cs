@@ -12,9 +12,24 @@ public class survivorAI : survivor {
 	GameObject[] effect = new GameObject[6];
 	public float time = 0f;
 	bool bEffect = false;
+
+
 	public GameObject zombie1;
-	
+
+	/// <summary>
+	/// Maximun number of units that the player can shoot.
+	/// </summary>
+	public float maxShootDistance = 5.0f;
+
+	/// <summary>
+	/// Shooting Effect
+	/// </summary>
 	public GameObject shot;
+
+	/// <summary>
+	/// The last Time.fixedTime that a bullet was shot.
+	/// </summary>
+	public float lastShoot;
 
 	public survivorAI(){
 		State = new StandByState (this);
@@ -95,10 +110,14 @@ public class survivorAI : survivor {
 		m.found = false;
 		m.start = true;
 	}
+
+	public bool CanShoot(){
+		return (Time.fixedTime - lastShoot) > 0.2; //Only allows to shoot a bullet every 0.2 seconds
+	}
 	
 	public void doShoot(survivorAI enemy, zombie zombie) 
 	{
-		Debug.Log("doing AI shooting");
+		//Debug.Log("doing AI shooting");
 		if(enemy != null)
 			rotateToShoot(enemy.transform);
 		else 
@@ -123,6 +142,11 @@ public class survivorAI : survivor {
 				doBulletEffect(enemy.gameObject.transform);
 			}
 		}
+
+		ammo -= 1;
+		lastShoot = Time.fixedTime;
+
+		Debug.Log("Shooting!");
 	}
 	
 	public void doRun()

@@ -49,8 +49,7 @@ public class UI : MonoBehaviour {
 		if (listWindowOn){
 			sList = new List<survivorAI>();
 			int i = 0;
-			foreach (GameObject a in GameObject.FindGameObjectsWithTag("survivor")){
-				survivorAI b = a.GetComponent (typeof(survivorAI)) as survivorAI;
+			foreach (var b in GameObject.FindObjectsOfType<survivorAI>()){
 				if(b.inCamp){
 					b.name = "john" + i;
 					i++;

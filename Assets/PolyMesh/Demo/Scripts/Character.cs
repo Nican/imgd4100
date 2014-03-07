@@ -19,6 +19,10 @@ public class Character : MonoBehaviour {
 		}
 	}
 
+	public virtual float MoveSpeed(){
+		return 50.0f;
+	}
+
 	void move(){
 	}
 	public void setDT(float DT){

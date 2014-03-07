@@ -45,9 +45,16 @@ public class InitGame : MonoBehaviour {
 		var mapGenerator = FindObjectOfType<MapGeneration3> ();
 
 		foreach(var obj in GameObject.FindObjectsOfType<zombie>())
-			Destroy(obj);
+			Destroy(obj.gameObject);
 
+		foreach(var obj in GameObject.FindObjectsOfType<survivorAI>())
+			Destroy(obj.gameObject);
+			
+		//This generates the new players
 		mapGenerator.GenerateGame ();
+
+		foreach(var obj in GameObject.FindObjectsOfType<survivorAI>())
+			obj.State = new SearchAI(obj);
 
 		nextGame = Time.fixedTime + 30;
 		isDay = true;
@@ -88,7 +95,7 @@ public class InitGame : MonoBehaviour {
 				
 			}
 
-			nextZombie = Time.fixedTime + Random.Range(1.0f, 3.0f);
+			nextZombie = Time.fixedTime + Random.Range(0.4f, 1.0f);
 		}
 	}
 	
@@ -96,7 +103,10 @@ public class InitGame : MonoBehaviour {
 		var objs = FindObjectsOfType<survivorAI>();
 
 		foreach(var obj in GameObject.FindGameObjectsWithTag("Collectable"))
-			Destroy(obj);
+			Destroy(obj.gameObject);
+
+		foreach(var obj in GameObject.FindObjectsOfType<survivorAI>())
+			obj.State = new Night(obj);
 
 		nextGame = Time.fixedTime + 30;
 		isDay = false;

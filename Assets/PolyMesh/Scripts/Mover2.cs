@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Mover2 : MonoBehaviour {
 
-	public float defspeed = 50;
+	//public float defspeed = 50;
 	public float destX = 15;
 	public float destY = 15;
 	
@@ -13,8 +13,6 @@ public class Mover2 : MonoBehaviour {
 
 	public bool found = true;
 	public bool start = true;
-
-	int MOVEFORCE = 50;
 	
 	// Use this for initialization
 	void Start () {
@@ -24,7 +22,27 @@ public class Mover2 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(!found) MoveTo(destX,destY);
+		var character = GetComponent<Character> ();
+
+		if (character == null)
+			return;
+
+		if (character.isDead)
+			return;
+
+		if(!found) 
+			MoveTo(destX,destY);
+	}
+
+	public float GetMoveForce(){
+		var character = GetComponent<Character> ();
+
+		if (character != null)
+			return character.MoveSpeed ();
+
+		return 50.0f;
+
+
 	}
 	
 	/// <summary>
@@ -81,12 +99,14 @@ public class Mover2 : MonoBehaviour {
 			next0V = next1V;
 			next1V = new Vector3 ((float)(next [1].xcoord), (float)(next [1].ycoord));
 		}
+
 		Vector3 normnext1v = next1V - transform.position;
 		Vector3 normnext2v = next2V - transform.position;
+		float moveSpeed = GetMoveForce ();
 		normnext1v.Normalize();
 		normnext2v.Normalize();
 		//r.AddForce (normnext0v * 50); //DO NOT UNCOMMENT THIS, IT THROWS OFF THE PATHING. The path is smooth looking enough anyway.
-		r.AddForce (normnext1v * MOVEFORCE);
-		r.AddForce (normnext2v * MOVEFORCE/2);
+		r.AddForce (normnext1v * moveSpeed);
+		r.AddForce (normnext2v * moveSpeed/2);
 	}
 }

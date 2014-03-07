@@ -84,6 +84,9 @@ public class Night : AbstractState {
 	
 	public override AbstractState Update ()
 	{
+		if (!survivorAI.CanShoot ())
+			return this;
+
 		List<zombie> zombies = FindzombiesInSight ();
 		
 		if (zombies.Count == 0)
@@ -98,19 +101,29 @@ public class Night : AbstractState {
 	}
 	
 	public List<zombie> FindzombiesInSight() {
-		List<zombie> characters = new List<zombie> ();//FindObjectsOfType (survivorAI.GetType ()) as GameObject[];
-		foreach (GameObject a in GameObject.FindGameObjectsWithTag("zombie"))
-			characters.Add ((zombie)a.GetComponent (typeof(zombie)));
-		
+
 		List<zombie> returnList = new List<zombie> ();
 		
-		foreach(zombie c in characters)
+		foreach(zombie c in GameObject.FindObjectsOfType<zombie>())
 		{
-			if(Vector3.Distance(this.survivorAI.transform.position,c.transform.position) <= 20)
-				returnList.Add(c);
+			if(c.isDead)
+				continue;
+
+			if(Vector3.Distance(this.survivorAI.transform.position,c.transform.position) > survivorAI.maxShootDistance)
+				continue;
+
+			RaycastHit hit;
+
+			if(!Physics.Raycast ( this.survivorAI.transform.position, c.transform.position, out hit, survivorAI.maxShootDistance ))
+				continue;
+
+			if(hit.collider.GetComponent<zombie>() == null)
+				continue;
+
+			returnList.Add(c);
 			
 		}
-		Debug.Log("zombie number = " + characters.Count);
+
 		return returnList;
 	}
 	
@@ -202,8 +215,7 @@ public class SearchAI : AbstractState {
 	
 	public List<survivorAI> FindsurvivorAIsInSight() {
 		List<survivorAI> characters = new List<survivorAI> ();//FindObjectsOfType (survivorAI.GetType ()) as GameObject[];
-		foreach (GameObject a in GameObject.FindGameObjectsWithTag("survivor")){
-			survivorAI tempS = a.GetComponent<survivorAI>();
+		foreach (var tempS in GameObject.FindObjectsOfType<survivorAI>()){
 			if(!tempS.inCamp)
 				characters.Add (tempS);
 		}
@@ -296,16 +308,15 @@ public class FightState : AbstractState {
 			float random = Random.value;
 			if(this.survivorAI.ammo <= 0)
 			{
-				Debug.Log("doing run");
+				//Debug.Log("doing run");
 				this.survivorAI.doHide();
 				float random1 = Random.value;
 				if(random < survivorAI.skill.defence && random >= 0f)
 					this.survivorAI.doRun();
 			} else {
-				Debug.Log("doing shooting");
+				//Debug.Log("doing shooting");
 				this.survivorAI.doShoot(Enemy, azombie);
 			}
-			return this;
 		}
 		
 		return this.Parent;

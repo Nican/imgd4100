@@ -31,7 +31,7 @@ public class PathfindHelper : MonoBehaviour {
 		{
 			head.extend();
 		}
-		print ("Found at patience = " + patience);
+		//print ("Found at patience = " + patience);
 		if(patience == 0) m.found = true;
 		testedGrid = null;
 	}
