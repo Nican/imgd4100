@@ -14,7 +14,7 @@ public class InitGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		SwitchToDay();
-		SwitchToNight();
+		//SwitchToNight();
 
 
 	

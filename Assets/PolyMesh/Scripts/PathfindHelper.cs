@@ -4,7 +4,10 @@ using System.Collections;
 public class PathfindHelper : MonoBehaviour {
 
 	public Astar head;
-	public Mover2 m;
+	public Mover2 m
+	{
+		get{ return GetComponent<Mover2> (); }
+	}
 
 	// Use this for initialization
 	void Start () {

@@ -92,12 +92,12 @@ public class survivorAI : survivor {
 		if(collision.gameObject.CompareTag ("Collectable"))
 		{
 			Destroy(collision.gameObject);
-			isCarrying = true;
+			//isCarrying = true;
 		}
 		else if(collision.gameObject.CompareTag ("subcollectable"))
 		{
 			Destroy(collision.gameObject.transform.parent.gameObject);
-			isCarrying = true;
+			//isCarrying = true;
 		}
 	}
 	

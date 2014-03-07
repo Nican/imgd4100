@@ -25,6 +25,8 @@ public class MapGeneration3 : MonoBehaviour {
 	public GameObject ammo;
 	public GameObject food;
 
+	List<GameObject> StoredRocks = new List<GameObject>();
+
 	// Use this for initialization
 	public void GenerateGame () {
 
@@ -55,7 +57,10 @@ public class MapGeneration3 : MonoBehaviour {
 		Instantiate (s, new Vector3 (1f, 0f), Quaternion.identity);
 		Instantiate (s, new Vector3 (0f, 0f), Quaternion.identity);
 
-		GameObject rock = GameObject.Find ("Rock");
+		foreach (GameObject rock in StoredRocks)
+			Destroy (rock.gameObject);
+
+		StoredRocks.Clear ();
 
 		Vector3 center; 
 		GameObject rock2;
@@ -68,7 +73,7 @@ public class MapGeneration3 : MonoBehaviour {
 				if(occupiedGrid[indx][indz])
 				{
 					center = convertGridToReal(indx,indz);
-					rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+					rock2 = CreateRock (center);
 					a = rock2.GetComponent<PolyMesh> ();
 
 					a.makeUnique ();
@@ -96,7 +101,7 @@ public class MapGeneration3 : MonoBehaviour {
 			//Top wall
 
 			center = new Vector3 ((float)(indx-sizeX/2),(float)(-sizeY/2 - 1));
-			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			rock2 = CreateRock (center);
 			a = rock2.GetComponent<PolyMesh> ();
 			
 			a.makeUnique ();
@@ -117,7 +122,7 @@ public class MapGeneration3 : MonoBehaviour {
 			//Bottom wall
 
 			center = new Vector3 ((float)(indx-sizeX/2),(float)(sizeY/2 + 1));
-			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			rock2 = CreateRock (center);
 			a = rock2.GetComponent<PolyMesh> ();
 			
 			a.makeUnique ();
@@ -142,7 +147,7 @@ public class MapGeneration3 : MonoBehaviour {
 			//Left wall
 
 			center = new Vector3 ((float)(-sizeX/2-1),(float)(indz-sizeY/2));
-			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			rock2 = CreateRock (center);
 			a = rock2.GetComponent<PolyMesh> ();
 			
 			a.makeUnique ();
@@ -163,7 +168,7 @@ public class MapGeneration3 : MonoBehaviour {
 			//Right wall
 			
 			center = new Vector3 ((float)(sizeX/2 + 1),(float)(indz-sizeY/2));
-			rock2 = Instantiate (rock, center, Quaternion.identity) as GameObject;
+			rock2 = CreateRock (center);
 			a = rock2.GetComponent<PolyMesh> ();
 			
 			a.makeUnique ();
@@ -195,7 +200,15 @@ public class MapGeneration3 : MonoBehaviour {
 			m.found = false;
 		}*/
 	}
+
+	public GameObject CreateRock(Vector3 center)
+	{
+		GameObject rock = GameObject.Find ("Rock");
 	
+		StoredRocks.Add (rock);
+
+		return Instantiate (rock, center, Quaternion.identity) as GameObject;
+	}	
 	// Update is called once per frame
 	void Update () {
 

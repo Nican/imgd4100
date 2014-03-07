@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Mover2 : MonoBehaviour {
 
@@ -8,7 +9,10 @@ public class Mover2 : MonoBehaviour {
 	public float destY = 15;
 	
 	public Rigidbody r;
-	public PathfindHelper p;
+	public PathfindHelper p 
+	{
+		get{ return GetComponent<PathfindHelper>(); }
+	}
 	Astar[] next;
 
 	public bool found = true;
@@ -54,12 +58,20 @@ public class Mover2 : MonoBehaviour {
 	{
 		if(start)
 		{
-			r.drag = 10;
-			p.Pathfind ((int)x, (int)y);
-			next[0] = p.head;
-			next[1] = p.popNext();
-			next[2] = p.popNext();
-			start = false;
+			try {
+				p.head = null;
+				r.drag = 10;
+				p.Pathfind ((int)x, (int)y);
+				next[0] = p.head;
+				next[1] = p.popNext();
+				next[2] = p.popNext();
+				start = false;
+			} catch( NullReferenceException e )
+			{
+				start = false;
+				found = true;
+				return; //WOO! Best way to catch excpetions on code you do not understand. ;-;
+			}
 		}
 		/*if(next[1] == null)
 		{

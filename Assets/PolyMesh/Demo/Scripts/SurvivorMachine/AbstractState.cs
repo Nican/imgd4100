@@ -84,6 +84,9 @@ public class Night : AbstractState {
 	
 	public override AbstractState Update ()
 	{
+		if (survivorAI.transform.position.magnitude < 1.5)
+			return new GoBaseAI(this.survivorAI, this);
+
 		if (!survivorAI.CanShoot ())
 			return this;
 
@@ -129,6 +132,56 @@ public class Night : AbstractState {
 	
 }
 
+
+public class DayState : AbstractState {
+
+	public DayState(survivorAI parent) : base(parent)
+	{
+
+	}
+
+	public override AbstractState Update ()
+	{
+		GameObject[] caches = GameObject.FindGameObjectsWithTag("Collectable");
+
+		if (caches.Count() == 0) {
+			return new GoBaseAI(this.survivorAI, this);
+		}
+
+		survivorAI.isSearching = false;
+		return new SearchAI (this.survivorAI);
+	}
+
+
+}
+
+public class GoBaseAI : AbstractState {
+
+	public readonly float startSearch;
+
+
+	public GoBaseAI(survivorAI surviror, AbstractState parent) : base(surviror)
+	{
+		this.Parent = parent;
+		startSearch = Time.fixedTime;
+		this.survivorAI.doSearch(20.0f, 13.0f);
+	}
+	
+	public override AbstractState Update ()
+	{
+		Mover2 m = survivorAI.GetComponent<Mover2> ();
+		if(m.found == true || (Time.fixedTime - startSearch) > 1.0f) 
+		{
+			return this.Parent;
+		}
+
+		return this;
+	}
+	
+	
+}
+
+
 public class SearchAI : AbstractState {
 
 	public readonly float startSearch;
@@ -143,13 +196,14 @@ public class SearchAI : AbstractState {
 	{
 		if(!this.survivorAI.isCarrying && !this.survivorAI.isSearching)
 			return doSearch();
-		else return checkSight();
+		else 
+			return checkSight();
 	}
 
 	public AbstractState checkSight(){
 		List<survivorAI> characters = FindsurvivorAIsInSight ();
 		if (characters.Count == 0){
-			Debug.Log("do Search running!");
+			//Debug.Log("do Search running!" + (Time.fixedTime - startSearch) );
 			//RunState run = new RunState();
 			//run.Parent = this;
 			//run.survivorAI = this.survivorAI;
@@ -159,8 +213,7 @@ public class SearchAI : AbstractState {
 
 			if(m.found == true || (Time.fixedTime - startSearch) > 5.0f) 
 			{
-				RunState run = new RunState(survivorAI);
-				run.Parent = this;
+				DayState run = new DayState(survivorAI);
 				return run;
 			}
 
@@ -195,12 +248,12 @@ public class SearchAI : AbstractState {
 	
 	public AbstractState doSearch()
 	{
-		MonoBehaviour.print("Searching");
+		//MonoBehaviour.print("Searching");
 		//MapGeneration3 map = Camera.main.GetComponent<MapGeneration3> ();
 		GameObject[] caches = GameObject.FindGameObjectsWithTag("Collectable");
 
 		if (caches.Count () == 0)
-			return this;
+			return new DayState(survivorAI);
 		
 		GameObject cache = caches [Random.Range (0, caches.Count ()-1)];
 		
